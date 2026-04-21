@@ -66,9 +66,30 @@
             background-color: rgba(250, 250, 249, 0.95);
             backdrop-filter: blur(8px);
         }
-
-        .decision-table-row { border-bottom: 1px solid #E7E5E4; }
-        .decision-table-row:last-child { border-bottom: none; }
+        
+        /* 班次表專用樣式 */
+        .schedule-box {
+            background-color: #F8FAFC;
+            border-left: 4px solid #0284C7;
+            padding: 10px 14px;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.85rem;
+            color: #334155;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+        .schedule-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            align-items: center;
+        }
+        .schedule-row:last-child { margin-bottom: 0; }
+        .schedule-time { font-weight: 700; color: #0F172A; width: 45px; }
+        .schedule-station { flex-grow: 1; margin-left: 12px; font-weight: 500; }
+        .schedule-train { color: #0284C7; font-size: 0.75rem; background: #E0F2FE; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .schedule-transfer { color: #EA580C; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; padding: 2px 0;}
     </style>
 </head>
 <body class="antialiased selection:bg-sky-200 selection:text-sky-900">
@@ -83,7 +104,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-stone-800 mb-2 tracking-tight">專屬行程表</h2>
-                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新優化版規劃</p>
+                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新交通優化版規劃</p>
                 <div class="space-y-4">
                     <div class="relative">
                         <input type="password" id="pass-input" placeholder="2026" class="w-full px-5 py-4 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-center text-lg tracking-widest bg-stone-50 transition-all" onkeypress="if(event.key === 'Enter') checkPassword()">
@@ -109,7 +130,7 @@
                     <a href="#overview" class="hover:text-sky-700">海拔氣溫</a>
                     <a href="#itinerary" class="hover:text-sky-700">完整行程表</a>
                     <a href="#weather-strategy" class="hover:text-sky-700">天氣決策</a>
-                    <a href="#logistics" class="hover:text-sky-700">物流指南</a>
+                    <a href="#logistics" class="hover:text-sky-700">交通指南</a>
                 </div>
             </div>
         </div>
@@ -120,14 +141,14 @@
         <!-- Hero Section -->
         <header class="text-center space-y-4 py-8">
             <h1 class="text-4xl md:text-5xl font-bold text-stone-800 tracking-tight">2026 義瑞盛夏自然之旅</h1>
-            <p class="text-lg md:text-xl text-stone-500 max-w-2xl mx-auto italic">「不追求排滿，只追求玩到重點且不爆體力。」</p>
+            <p class="text-lg md:text-xl text-stone-500 max-w-2xl mx-auto italic">「高容錯、低疲勞。結合精準 SBB 交通銜接的完美親子計畫。」</p>
             
             <div class="flex flex-wrap justify-center gap-4 mt-8">
                 <div class="bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-sm font-medium text-stone-600">
                     <i class="fa-solid fa-people-group mr-1"></i> 兩大一小 (10歲)
                 </div>
-                <div class="bg-amber-50 text-amber-700 px-4 py-2 rounded-full border border-amber-200 shadow-sm text-sm font-bold">
-                    <i class="fa-solid fa-cloud-sun mr-1"></i> 天氣驅動決策模式
+                <div class="bg-sky-50 text-sky-700 px-4 py-2 rounded-full border border-sky-200 shadow-sm text-sm font-bold">
+                    <i class="fa-solid fa-train-tram mr-1"></i> 順暢轉車無縫銜接
                 </div>
             </div>
         </header>
@@ -156,15 +177,15 @@
         <!-- Section 2: Full Expanded Itinerary -->
         <section id="itinerary" class="space-y-12">
             <div class="mb-4">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-calendar-days text-sky-600 mr-2"></i>11 天深度行程 (實戰優化版)</h2>
-                <p class="text-stone-500 text-sm leading-relaxed">我們納入了更精準的抵達預時與天氣備援計畫。</p>
+                <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-calendar-days text-sky-600 mr-2"></i>11 天深度行程 (含實戰班次)</h2>
+                <p class="text-stone-500 text-sm leading-relaxed">各移動日已加入瑞士國鐵 (SBB) 最順暢的推薦班次與轉乘緩衝時間，請務必提早預訂跨國對號座。</p>
             </div>
             <div id="itinerary-content" class="space-y-16">
                 <!-- Content injected via JS -->
             </div>
         </section>
 
-        <!-- Section Weather Strategy (NEW) -->
+        <!-- Section Weather Strategy -->
         <section id="weather-strategy" class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
             <div class="bg-stone-800 p-6">
                 <h2 class="text-xl font-bold text-white mb-1"><i class="fa-solid fa-cloud-bolt text-amber-400 mr-2"></i>瑞士天氣決策指南 (不可硬衝原則)</h2>
@@ -215,8 +236,8 @@
                 </div>
             </div>
             <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
-                <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center"><i class="fa-solid fa-suitcase-rolling text-amber-600 mr-2"></i>行李與洗滌實戰建議</h3>
-                <p class="text-sm text-stone-600 leading-relaxed">在策馬特（Day 2 或 Day 3）把前幾天的衣服洗好，能大幅減輕轉場格林德瓦時的重量。格林德瓦 Terminal 站比 Bahnhof 更好走行李。</p>
+                <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center"><i class="fa-solid fa-suitcase-rolling text-amber-600 mr-2"></i>轉車與行李實戰心法</h3>
+                <p class="text-sm text-stone-600 leading-relaxed">瑞士火車轉乘（如 Visp, Spiez）設計極佳，月台間皆有斜坡或電梯。請注意：上下火車時門口有高低差，大人先上車接應小孩與行李。轉車時間即使只有 10 分鐘，只要不猶豫跟著人群走，絕對來得及。</p>
             </div>
         </section>
 
@@ -286,7 +307,7 @@
         }
 
         // ==========================================
-        // 📅 行程資料 (Updated Logic)
+        // 📅 行程資料 (Added Specific Transport Schedules)
         // ==========================================
         const itineraryData = {
             station1: {
@@ -296,12 +317,21 @@
                     {
                         date: "8/08 (六) Day 1",
                         route: "抵達米蘭 ➔ 跨越邊境 ➔ 策馬特 (長途移動日)",
-                        content: "<strong class='text-sky-800'>【下午】</strong> 08:00 下飛機，抓 1.5hr 通關。建議搭乘 10:43 或 11:43 的快車。約傍晚 16:30 抵達策馬特。這天不要排任何景點，下午進房洗澡，晚餐吃飽後直接休息補眠，為隔天調整時差。",
-                        transport: "Malpensa Express + EC 快車 + MGB 列車",
-                        temp: "預估 20°C", duration: "約 5 小時", departure: "約 11:00 (通關後)",
+                        content: `<strong class='text-sky-800'>【交通策略】</strong> 考量通關與拿行李，我們安排在米蘭中央車站有 1 小時 15 分鐘的緩衝，讓您能從容買午餐，避免帶小孩狂奔趕車。
+                        <div class="schedule-box shadow-sm">
+                            <div class="schedule-row"><span class="schedule-time">11:13</span> <span class="schedule-station">米蘭機場 MXP</span> <span class="schedule-train">Malpensa Express</span></div>
+                            <div class="schedule-row"><span class="schedule-time">12:05</span> <span class="schedule-station">米蘭中央車站 (抵達)</span></div>
+                            <div class="schedule-transfer"><i class="fa-solid fa-burger"></i> 站內休息吃午餐緩衝 1h15m</div>
+                            <div class="schedule-row"><span class="schedule-time">13:20</span> <span class="schedule-station">米蘭中央車站 (出發)</span> <span class="schedule-train">EC 34 跨國快車</span></div>
+                            <div class="schedule-row"><span class="schedule-time">15:16</span> <span class="schedule-station">瑞士 Brig (轉乘)</span> <span class="schedule-train">MGB 景觀列車</span></div>
+                            <div class="schedule-row"><span class="schedule-time">17:14</span> <span class="schedule-station">抵達 策馬特 (Zermatt)</span></div>
+                        </div>
+                        <p class="text-sm mt-2">抵達後直接進房洗澡，晚餐吃飽後直接休息補眠，為隔天調整時差。</p>`,
+                        transport: "機場快線 + EC 快車 + MGB 列車",
+                        temp: "預估 20°C", duration: "含緩衝約 6 小時", departure: "11:13 (機場發車)",
                         photoTip: "火車駛入 Mattertal 峽谷時適合錄製動態影片",
-                        food: "傍晚去 Coop 超市買烤雞或簡餐在公寓自炊",
-                        highlight: "成功挺過轉車考驗，迎接無煙小鎮清新空氣"
+                        food: "米蘭車站買 Pizza 或三明治帶上跨國火車吃",
+                        highlight: "成功挺過轉車考驗，迎接無煙小鎮"
                     },
                     {
                         date: "8/09 (日) Day 2",
@@ -310,7 +340,7 @@
                         transport: "步行",
                         temp: "預估 22°C", duration: "完全彈性", departure: "睡到自然醒",
                         photoTip: "在小鎮橋上迎接馬特洪峰的初次露臉",
-                        food: "推薦：黑面羊肉料理或義式披薩",
+                        food: "推薦：黑面羊肉料理或傳統起司烤餅 (Raclette)",
                         highlight: "零壓力的時差調整，感受純淨瑞士生活"
                     },
                     {
@@ -342,10 +372,20 @@
                     {
                         date: "8/12 (三) Day 5",
                         route: "策馬特 ➔ 格林德瓦 (悠閒轉場移動日)",
-                        content: "<strong class='text-sky-800'>【中午】</strong> 策馬特退房。不用急著走，改為 11:00 前後出發。讓孩子早上能在策馬特買最後一輪伴手禮。抵達格林德瓦後辦理入住，傍晚至超市採買儲備未來三天的食材。",
+                        content: `<strong class='text-sky-800'>【上午】</strong> 睡飽退房。瑞士的轉車時間雖短但動線極佳，請放心跟著人群走。
+                        <div class="schedule-box shadow-sm">
+                            <div class="schedule-row"><span class="schedule-time">10:37</span> <span class="schedule-station">策馬特 Zermatt</span> <span class="schedule-train">MGB 列車</span></div>
+                            <div class="schedule-row"><span class="schedule-time">11:46</span> <span class="schedule-station">Visp (轉乘)</span> <span class="schedule-train">IC 城際列車</span></div>
+                            <div class="schedule-transfer"><i class="fa-solid fa-person-walking-luggage"></i> 轉乘 11 分鐘 (有電梯/斜坡)</div>
+                            <div class="schedule-row"><span class="schedule-time">11:57</span> <span class="schedule-station">Visp 出發</span></div>
+                            <div class="schedule-row"><span class="schedule-time">12:23</span> <span class="schedule-station">Spiez (轉乘)</span> <span class="schedule-train">ICE/IC 列車</span></div>
+                            <div class="schedule-row"><span class="schedule-time">12:58</span> <span class="schedule-station">因特拉肯 Interlaken Ost (轉乘)</span> <span class="schedule-train">BOB 登山火車</span></div>
+                            <div class="schedule-row"><span class="schedule-time">13:34</span> <span class="schedule-station">抵達 格林德瓦 Grindelwald</span></div>
+                        </div>
+                        <p class="text-sm mt-2">抵達後逛 Coop 超市採買食材，為隔天挑戰少女峰區儲備體力。</p>`,
                         transport: "IC 城際列車 + BOB 鐵路",
-                        temp: "預估 22°C", duration: "約 3 小時", departure: "10:30~11:00",
-                        photoTip: "火車行經圖恩湖時捕捉蒂芬妮藍湖水",
+                        temp: "預估 22°C", duration: "約 3 小時", departure: "10:37 班次",
+                        photoTip: "火車行經 Spiez 後可捕捉圖恩湖翠綠水色",
                         food: "超市買牛排與起司，享受艾格峰下的陽台晚餐",
                         highlight: "零摩擦力的移動體驗，為攻頂儲備能量"
                     },
@@ -362,10 +402,10 @@
                     {
                         date: "8/14 (五) Day 7",
                         route: "歐洲之巔：少女峰 (主攻決策日)",
-                        content: "<strong class='text-sky-800'>【全天】</strong> <strong class='text-red-600 font-bold underline'>決策原則：</strong> 早上 7 點看 Jungfraujoch Webcam。若山頂雲層高度過低或白牆一片，『絕對不要上去』，直接將此日與 Day 8 對調。天氣晴朗才攻頂。",
+                        content: "<strong class='text-sky-800'>【全天】</strong> <strong class='text-red-600 font-bold underline'>決策原則：</strong> 早上 7 點看 Jungfraujoch Webcam。若山頂雲層高度過低或白牆一片，『絕對不要上去』，直接將此日與 Day 8 對調。天氣晴朗才搭乘 Eiger Express 攻頂。",
                         transport: "Eiger Express + 齒軌火車",
                         temp: "峰頂 -1°C", duration: "單程 45 分鐘", departure: "08:15",
-                        photoTip: "站在阿萊奇冰川背景前拍 10 週年紀錄照",
+                        photoTip: "站在阿萊奇冰川背景前拍家族紀錄照",
                         food: "頂上的 Lindt 巧克力店最後採買",
                         highlight: "直達 3454m 歐洲海拔最高火車站"
                     },
@@ -388,9 +428,16 @@
                     {
                         date: "8/16 (日) Day 9",
                         route: "黃金快線 ➔ 琉森 (放鬆模式開啟)",
-                        content: "<strong class='text-sky-800'>【下午】</strong> 搭乘黃金快線。抵達琉森後進入『節能模式』。帶著小孩在琉森湖畔餵天鵝、逛古城，不要排任何體力行程。",
+                        content: `<strong class='text-sky-800'>【交通策略】</strong> 黃金快線 (Luzern-Interlaken Express) 是這趟最美的火車之一。
+                        <div class="schedule-box shadow-sm">
+                            <div class="schedule-row"><span class="schedule-time">10:18</span> <span class="schedule-station">格林德瓦 Grindelwald</span> <span class="schedule-train">BOB 列車</span></div>
+                            <div class="schedule-row"><span class="schedule-time">10:53</span> <span class="schedule-station">因特拉肯 Interlaken Ost (轉乘)</span> <span class="schedule-train">黃金快線</span></div>
+                            <div class="schedule-row"><span class="schedule-time">11:04</span> <span class="schedule-station">因特拉肯 出發</span></div>
+                            <div class="schedule-row"><span class="schedule-time">12:55</span> <span class="schedule-station">抵達 琉森 Luzern</span></div>
+                        </div>
+                        <p class="text-sm mt-2">抵達琉森後進入『節能模式』。帶著小孩在琉森湖畔餵天鵝、逛古城，不要排任何體力行程。</p>`,
                         transport: "Luzern-Interlaken Express",
-                        temp: "預估 25°C", duration: "約 2 小時", departure: "10:04 或更晚",
+                        temp: "預估 25°C", duration: "約 2.5 小時", departure: "10:18 班次",
                         photoTip: "列車右側窗外的湖景是縮時攝影首選",
                         food: "當地名菜：蘑菇小牛肉派 (Chügelipastete)",
                         highlight: "優雅進入城市節奏，享受湖光山色"
@@ -408,10 +455,15 @@
                     {
                         date: "8/18 (二) Day 11",
                         route: "琉森 ➔ 蘇黎世機場 ➔ 賦歸",
-                        content: "<strong class='text-sky-800'>【上午】</strong> 慢悠悠吃完最後一頓瑞士早餐。搭火車直達機場。機場的商店區非常大，可以做最後一輪伴手禮掃貨，銜接 13:30 航班。",
+                        content: `<strong class='text-sky-800'>【完美收尾】</strong> 為了銜接 13:30 的國泰航班，我們安排了一班最穩健的直達車。
+                        <div class="schedule-box shadow-sm border-l-emerald-500">
+                            <div class="schedule-row"><span class="schedule-time">09:35</span> <span class="schedule-station">琉森 Luzern</span> <span class="schedule-train">IR 70 直達快車</span></div>
+                            <div class="schedule-row"><span class="schedule-time">10:44</span> <span class="schedule-station">抵達 蘇黎世機場 (Zürich Flughafen)</span></div>
+                        </div>
+                        <p class="text-sm mt-2">抵達後有充裕近 3 小時辦理退稅、掛行李。機場商店區非常大，可做最後一輪伴手禮掃貨。</p>`,
                         transport: "SBB 直達快車 (IR 70)",
-                        temp: "預估 26°C", duration: "約 1.1 小時", departure: "09:35",
-                        photoTip: "整理照片，把最滿意的 10 張發佈動態",
+                        temp: "預估 26°C", duration: "約 1.1 小時", departure: "09:35 班次",
+                        photoTip: "整理照片，把最滿意的相片發佈動態",
                         food: "Läderach 秤重巧克力最後採買",
                         highlight: "滿載回憶與笑容的完美句點"
                     }
@@ -445,7 +497,7 @@
                                     <span class="text-[10px] text-orange-600 font-bold bg-orange-100 px-2 py-0.5 rounded-full">${day.temp}</span>
                                     <span class="text-[10px] text-sky-600 font-bold bg-sky-100 px-2 py-0.5 rounded-full">${day.duration}</span>
                                 </div>
-                                <div class="text-[10px] text-indigo-700 font-bold bg-indigo-100 px-3 py-1 rounded-md border border-indigo-200"><i class="fa-solid fa-flag-checkered mr-1"></i>出發: ${day.departure}</div>
+                                <div class="text-[10px] text-indigo-700 font-bold bg-indigo-100 px-3 py-1 rounded-md border border-indigo-200"><i class="fa-solid fa-flag-checkered mr-1"></i>建議出發: ${day.departure}</div>
                             </div>
                         </div>
                         <div class="lg:col-span-6 flex flex-col justify-center">
