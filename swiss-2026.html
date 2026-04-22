@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAF9; color: #292524; overflow: hidden; }
@@ -34,7 +34,7 @@
             <div class="relative z-10">
                 <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-5 text-white text-2xl shadow-lg"><i class="fa-solid fa-lock"></i></div>
                 <h2 class="text-2xl font-bold text-stone-800 mb-2 tracking-tight">專屬行程表</h2>
-                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新 雙基地鎖定版</p>
+                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新 預算總覽版</p>
                 <div class="space-y-4">
                     <div class="relative"><input type="password" id="pass-input" placeholder="2026" class="w-full px-5 py-4 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-center text-lg tracking-widest bg-stone-50 transition-all" onkeypress="if(event.key === 'Enter') checkPassword()"></div>
                     <p id="pass-error" class="text-red-500 text-sm hidden font-medium animate-bounce">密碼錯誤，請重試</p>
@@ -49,10 +49,12 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0 flex items-center font-bold text-xl text-sky-800 tracking-wider"><i class="fa-solid fa-mountain-sun mr-2"></i> 義瑞盛夏自然之旅</div>
-                <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
-                    <a href="#itinerary" class="hover:text-sky-700">完整行程表</a>
-                    <a href="#weather-strategy" class="hover:text-sky-700">天氣決策</a>
-                    <a href="#logistics" class="hover:text-sky-700">住宿與物流</a>
+                <!-- 導覽列更新 -->
+                <div class="hidden md:flex space-x-6 text-sm font-medium text-stone-600">
+                    <a href="#itinerary" class="hover:text-sky-700 transition-colors">行程表</a>
+                    <a href="#weather-strategy" class="hover:text-sky-700 transition-colors">天氣決策</a>
+                    <a href="#budget" class="hover:text-emerald-600 text-emerald-700 font-bold transition-colors"><i class="fa-solid fa-wallet mr-1"></i>預算總覽</a>
+                    <a href="#logistics" class="hover:text-sky-700 transition-colors">物流指南</a>
                 </div>
             </div>
         </div>
@@ -65,9 +67,102 @@
             <p class="text-lg md:text-xl text-stone-500 max-w-2xl mx-auto italic">「高容錯、低疲勞。結合精準 SBB 交通銜接的完美親子計畫。」</p>
             <div class="flex flex-wrap justify-center gap-4 mt-8">
                 <div class="bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-sm font-medium text-stone-600"><i class="fa-solid fa-people-group mr-1"></i> 兩大一小 (10歲)</div>
-                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm text-sm font-bold"><i class="fa-solid fa-check-double mr-1"></i> 策馬特/格林德瓦 基地皆鎖定</div>
+                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm text-sm font-bold"><i class="fa-solid fa-check-double mr-1"></i> 機票與兩大基地已鎖定</div>
             </div>
         </header>
+
+        <!-- [NEW] Section: Budget & Costs -->
+        <section id="budget" class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden mb-12">
+            <div class="bg-emerald-700 p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold mb-1"><i class="fa-solid fa-wallet mr-2"></i>已確認花費總覽 (Budget)</h2>
+                    <p class="text-emerald-100 text-sm">目前已鎖定國泰機票與前兩站住宿 (暫估匯率: 1 CHF ≈ 36.5 TWD)</p>
+                </div>
+                <div class="bg-emerald-800/50 px-6 py-3 rounded-xl border border-emerald-600/50 text-center backdrop-blur-sm">
+                    <p class="text-xs text-emerald-200 font-medium mb-1">目前已確認總預估 (TWD)</p>
+                    <p class="text-3xl font-black">~ $190,044</p>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Flight Costs -->
+                <div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center border-b border-stone-200 pb-2">
+                        <i class="fa-solid fa-plane-departure text-sky-600 mr-2"></i>國泰航空 國際線機票 (3人)
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex justify-between items-center">
+                            <div>
+                                <p class="text-sm font-bold text-stone-800">去程 (TPE-HKG-MXP)</p>
+                                <p class="text-xs text-stone-500">8/7 21:05 出發</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-base font-bold text-stone-800">TWD 75,966</p>
+                            </div>
+                        </div>
+                        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex justify-between items-center">
+                            <div>
+                                <p class="text-sm font-bold text-stone-800">回程 (ZRH-HKG-TPE)</p>
+                                <p class="text-xs text-stone-500">8/18 13:30 出發</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-base font-bold text-stone-800">TWD 29,461</p>
+                                <p class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 mt-1 inline-block">+ 81,000 哩程 (Mile)</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 px-2">
+                            <p class="text-sm font-bold text-stone-600">機票總計：</p>
+                            <p class="text-lg font-black text-sky-700">TWD 105,427</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accommodation Costs -->
+                <div>
+                    <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center border-b border-stone-200 pb-2">
+                        <i class="fa-solid fa-bed text-indigo-600 mr-2"></i>瑞士住宿費用 (連泊 8 晚)
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between items-center">
+                            <div>
+                                <p class="text-sm font-bold text-stone-800">策馬特 (4晚)</p>
+                                <p class="text-xs text-stone-600">Haus Matten, Apt Gant</p>
+                                <p class="text-[10px] text-stone-500 mt-0.5">8/8 - 8/12</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-base font-bold text-indigo-900">CHF 1,218.00</p>
+                                <p class="text-xs text-stone-500">(含 5% 刷卡手續費)</p>
+                            </div>
+                        </div>
+                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between items-center">
+                            <div>
+                                <p class="text-sm font-bold text-stone-800">格林德瓦 (4晚)</p>
+                                <p class="text-xs text-stone-600">Jungfrau Lodge, Swiss Mtn</p>
+                                <p class="text-[10px] text-stone-500 mt-0.5">8/12 - 8/16</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-base font-bold text-indigo-900">CHF 1,100.05</p>
+                                <p class="text-xs text-emerald-600 font-medium">已折 CHF 79.55</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end pt-2 px-2">
+                            <div class="flex justify-between w-full mb-1">
+                                <p class="text-sm font-bold text-stone-600">住宿總計 (CHF)：</p>
+                                <p class="text-lg font-black text-indigo-700">CHF 2,318.05</p>
+                            </div>
+                            <p class="text-xs text-stone-500 font-medium">換算台幣約 TWD 84,608 (暫以 1:36.5 估算)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Remaining Target Note -->
+            <div class="bg-amber-50 p-4 border-t border-amber-100 text-center">
+                <p class="text-sm text-amber-800 font-medium">
+                    <i class="fa-solid fa-bullseye mr-1"></i> 下一步目標：尋找 <strong>琉森 (Luzern) 8/16 ~ 8/18 兩晚住宿</strong>。
+                </p>
+            </div>
+        </section>
 
         <!-- Leaflet Map Section -->
         <section id="map-section" class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 md:p-8">
@@ -126,15 +221,15 @@
             <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
                 <h3 class="text-lg font-bold text-emerald-700 mb-4 flex items-center"><i class="fa-solid fa-house-chimney text-emerald-600 mr-2"></i>基地 1：Haus Matten (策馬特)</h3>
                 <div class="text-sm space-y-3 text-stone-600">
-                    <p><strong><i class="fa-solid fa-kitchen-set mr-1"></i> 全能大廚房：</strong>這 4 晚是您的主廚時刻！抵達第一天去 Coop 大採買，牛排、義大利麵、瑞士雞蛋隨您煮。旅行鍋這幾天可以先不用拿出來。</p>
-                    <p><strong><i class="fa-solid fa-mountain mr-1"></i> 陽台景觀：</strong>公寓在 4 樓且有電梯。陽台朝南直對馬特洪峰，清晨起床直接在客廳等日照金山即可，完全不用出門吹冷風。</p>
+                    <p><strong><i class="fa-solid fa-kitchen-set mr-1"></i> 全能大廚房：</strong>這 4 晚是您的主廚時刻！抵達第一天去 Coop 大採買，牛排、義大利麵、瑞士雞蛋隨您煮。</p>
+                    <p><strong><i class="fa-solid fa-mountain mr-1"></i> 陽台景觀：</strong>公寓在 4 樓且有電梯。陽台朝南直對馬特洪峰，清晨起床直接在客廳等日照金山。</p>
                 </div>
             </div>
             <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
                 <h3 class="text-lg font-bold text-sky-800 mb-4 flex items-center"><i class="fa-solid fa-hotel text-sky-600 mr-2"></i>基地 2：Jungfrau Lodge (格林德瓦)</h3>
                 <div class="text-sm space-y-3 text-stone-600">
                     <p><strong><i class="fa-solid fa-suitcase mr-1"></i> 立體收納：</strong>房間 22 平方公尺。入住後請將衣物掛入衣櫥，大行李箱直立靠牆，以保留走動空間。</p>
-                    <p><strong><i class="fa-solid fa-plug mr-1"></i> 雙電壓鍋上場：</strong>因為沒廚房，此時拿出您準備的「雙電壓旅行鍋」，搭配主車站 Coop 買的熱食，解決晚餐與宵夜。</p>
+                    <p><strong><i class="fa-solid fa-plug mr-1"></i> 雙電壓鍋上場：</strong>拿出您準備的「雙電壓旅行鍋」，搭配主車站 Coop 買的熱食，解決晚餐與宵夜。</p>
                 </div>
             </div>
         </section>
@@ -223,7 +318,7 @@
                     {
                         date: "8/09 (日) Day 2",
                         route: "策馬特小鎮 (海拔適應回血日)",
-                        content: "<strong class='text-sky-800'>【全天】</strong> 睡到自然醒。小孩可體驗客廳的隱藏式墨菲床 (Murphy beds)。白天帶孩子在小鎮逛逛、去 Coop 大採買未來幾天的伙食。這天不上山，讓身體完全適應 1600m 的海拔。",
+                        content: "<strong class='text-sky-800'>【全天】</strong> 睡到自然醒。白天帶孩子在小鎮逛逛、去 Coop 大採買未來幾天的伙食。這天不上山，讓身體完全適應 1600m 的海拔。",
                         transport: "步行",
                         temp: "預估 22°C", duration: "完全彈性", departure: "睡到自然醒",
                         photoTip: "在公寓的朝南陽台，直接拍攝專屬的馬特洪峰",
@@ -307,7 +402,7 @@
             },
             station3: {
                 title: "第三站：琉森．古城收尾 (Luzern)",
-                hotel: "選址原則：火車站步行 5 分鐘內完全平地",
+                hotel: "尋找中：需火車站步行 5 分鐘內完全平地",
                 days: [
                     {
                         date: "8/16 (日) Day 9",
@@ -322,7 +417,7 @@
                     {
                         date: "8/17 (一) Day 10",
                         route: "皮拉圖斯山 (Pilatus) 金色環遊",
-                        content: "<strong class='text-sky-800'>【上午】</strong> 體驗世界最陡齒軌。這是一個低體力、高樂趣的行程。讓孩子玩雪橇道。傍晚回老城區買巧克力、看點燈後的木橋。",
+                        content: "<strong class='text-sky-800'>【上午】</strong> 體驗世界最陡齒軌。讓孩子玩雪橇道。傍晚回老城區買巧克力、看點燈後的木橋。",
                         transport: "最陡火車 + 琉森湖船遊",
                         temp: "山頂 12°C", duration: "單程 30 分鐘", departure: "08:30",
                         photoTip: "夜間模式捕捉卡貝爾木橋點燈夜景",
@@ -332,7 +427,7 @@
                     {
                         date: "8/18 (二) Day 11",
                         route: "琉森 ➔ 蘇黎世機場 ➔ 賦歸",
-                        content: `<strong class='text-sky-800'>【完美收尾】</strong> 搭乘 09:35 直達快車 (IR 70)，10:44 直達蘇黎世機場航廈下方。保留近 3 小時餘裕辦理退稅、掛行李與採購，銜接 13:30 國泰航班。`,
+                        content: `<strong class='text-sky-800'>【完美收尾】</strong> 搭乘 09:35 直達快車 (IR 70)，10:44 直達蘇黎世機場。保留近 3 小時餘裕辦理退稅、掛行李與採購，銜接 13:30 國泰航班。`,
                         transport: "SBB 直達快車 (IR 70)",
                         temp: "預估 26°C", duration: "約 1.1 小時", departure: "09:35 班次",
                         photoTip: "整理照片，把最滿意的相片發佈動態",
