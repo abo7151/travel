@@ -232,13 +232,13 @@
             </div>
         </section>
 
-        <!-- [NEW] Section: Swiss Pass Comparison -->
+        <!-- [NEW] Section: Swiss Pass Comparison (Collapsible) -->
         <section id="pass-comparison" class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden mb-12">
-            <div class="bg-gradient-to-r from-violet-700 to-indigo-700 p-6 md:p-8 text-white">
+            <button onclick="document.getElementById('pass-detail').classList.toggle('hidden'); this.querySelector('i.fa-chevron-down')?.classList.toggle('rotate-180')" class="w-full bg-gradient-to-r from-violet-700 to-indigo-700 p-6 md:p-8 text-white cursor-pointer hover:from-violet-800 hover:to-indigo-800 transition-all">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h2 class="text-2xl font-bold mb-1"><i class="fa-solid fa-ticket mr-2"></i>票券方案精算比較</h2>
-                        <p class="text-violet-200 text-sm">Swiss Half Fare Card vs. Swiss Travel Pass — 逐日精算結論</p>
+                    <div class="text-left">
+                        <h2 class="text-2xl font-bold mb-1"><i class="fa-solid fa-ticket mr-2"></i>票券方案精算比較 <i class="fa-solid fa-chevron-down ml-2 text-sm transition-transform duration-300"></i></h2>
+                        <p class="text-violet-200 text-sm">Swiss Half Fare Card vs. Swiss Travel Pass — 點擊展開詳細比較</p>
                     </div>
                     <div class="bg-emerald-500/90 px-5 py-3 rounded-xl border border-emerald-400/50 text-center backdrop-blur-sm shadow-lg">
                         <p class="text-[10px] text-emerald-100 font-medium mb-0.5">✅ 推薦方案</p>
@@ -246,9 +246,9 @@
                         <p class="text-[10px] text-emerald-100">省 ≈ CHF 598 (TWD 24,100)</p>
                     </div>
                 </div>
-            </div>
+            </button>
 
-            <!-- Pass Cards -->
+            <div id="pass-detail" class="hidden">
             <div class="p-6 md:p-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <!-- HFC Card -->
@@ -430,23 +430,15 @@
                 </div>
             </div>
 
-            <!-- Bottom: Early-Bird Ticket Strategy -->
-            <div class="bg-gradient-to-r from-indigo-50 to-sky-50 p-5 border-t border-indigo-100">
-                <h4 class="font-bold text-indigo-900 text-sm mb-3"><i class="fa-solid fa-shield-halved text-indigo-600 mr-2"></i>早鳥票防禦策略 (Supersaver 可疊加 HFC)</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm mb-3">
-                    <div class="bg-white/70 p-3 rounded-lg border border-emerald-200">
-                        <p class="font-bold text-emerald-700 mb-1"><i class="fa-solid fa-circle-check mr-1"></i>D5、D9、D11：大膽買早鳥票！</p>
-                        <p class="text-xs text-stone-600">從飯店出發時間完全掌握，設好鬧鐘提早 15 分到車站即可。D11 飛機時間是死的，本來就得搭那班車。</p>
-                    </div>
-                    <div class="bg-white/70 p-3 rounded-lg border border-red-200">
-                        <p class="font-bold text-red-700 mb-1"><i class="fa-solid fa-circle-xmark mr-1"></i>D1 跨國段：到現場再買！</p>
-                        <p class="text-xs text-stone-600">飛機延誤、海關排隊變數多。<strong>拿到行李後</strong>打開 SBB App 即買即用，搜尋 Malpensa → Zermatt 選最近班次刷卡。</p>
-                    </div>
-                </div>
-                <div class="flex flex-wrap justify-center gap-3 text-xs text-indigo-700">
+            </div>
+            <!-- Bottom: Flexible Ticket Note -->
+            <div class="bg-stone-50 p-4 border-t border-stone-200">
+                <div class="flex flex-wrap justify-center gap-3 text-xs text-stone-600">
                     <span><i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i>出發前 SBB.ch 購買 HFC ×2 + Family Card</span>
-                    <span class="text-indigo-300">|</span>
+                    <span class="text-stone-300">|</span>
                     <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i>HFC 從 Domodossola 入境後才生效，義大利段需另購</span>
+                    <span class="text-stone-300">|</span>
+                    <span><i class="fa-solid fa-arrows-left-right text-sky-500 mr-1"></i>城際火車保留彈性，到現場再買即可</span>
                 </div>
             </div>
         </section>
@@ -619,7 +611,7 @@
             },
             station2: {
                 title: "第二站：少女峰區．巔峰冒險 (Grindelwald)",
-                hotel: "已鎖定：Jungfrau Lodge (附早餐) | 離主車站 3 分鐘",
+                hotel: "已鎖定：Jungfrau Lodge (含早餐) | 離主車站 3 分鐘",
                 days: [
                     {
                         date: "8/12 (三) Day 5",
@@ -672,7 +664,7 @@
             },
             station3: {
                 title: "第三站：琉森．古城收尾 (Luzern)",
-                hotel: "尋找中：需火車站步行 5 分鐘內完全平地",
+                hotel: "已鎖定：Hotel Monopol ★★★★ Junior Suite (含早餐) | 車站正對面",
                 days: [
                     {
                         date: "8/16 (日) Day 9",
@@ -697,9 +689,9 @@
                     {
                         date: "8/18 (二) Day 11",
                         route: "琉森 ➔ 蘇黎世機場 ➔ 賦歸",
-                        content: `<strong class='text-sky-800'>【完美收尾】</strong> 搭乘 09:35 直達快車 <strong>(IR 75)</strong>，約 10:44 直達蘇黎世機場 (Zürich Flughafen)。保留近 3 小時餘裕辦理退稅、掛行李與採購，銜接 13:30 國泰航班。<div class='text-xs text-red-600 mt-1 bg-red-50 border border-red-200 rounded px-2 py-1 inline-block'><i class='fa-solid fa-triangle-exclamation mr-1'></i>注意：IR 70 僅到 Zürich HB 不到機場，務必搭 <strong>IR 75</strong> 直達機場站</div>`,
+                        content: `<strong class='text-sky-800'>【完美收尾】</strong> 搭乘 09:35 直達快車 <strong>(IR 75)</strong>，約 10:44 直達蘇黎世機場 (Zürich Flughafen)。保留近 3 小時餘裕辦理退稅、掛行李與採購，銜接 13:30 國泰航班。`,
                         transport: "SBB 直達快車 (IR 75 直達機場)",
-                        temp: "預估 26°C", duration: "約 1.1 小時", departure: "09:35 班次 (建議買早鳥票)",
+                        temp: "預估 26°C", duration: "約 1.1 小時", departure: "09:35 班次",
                         photoTip: "整理照片，把最滿意的相片發佈動態",
                         food: "Läderach 秤重巧克力最後採買",
                         highlight: "滿載回憶與笑容的完美句點"
