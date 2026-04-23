@@ -55,7 +55,7 @@
                 </button>
             </div>
             <p id="error-msg" class="mt-4 text-red-500 text-sm hidden">密碼錯誤，請再試一次。</p>
-            <p class="mt-6 text-xs text-gray-400">提示：預設密碼為 2026</p>
+
         </div>
     </div>
 
@@ -337,15 +337,22 @@
         lucide.createIcons();
 
         // 密碼驗證邏輯
-        const TRIP_PASSWORD = "2026";
+        async function hashPassword(pwd) {
+            const msgBuffer = new TextEncoder().encode(pwd);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
-        function checkPassword() {
+        async function checkPassword() {
             const input = document.getElementById('trip-password').value;
             const overlay = document.getElementById('password-overlay');
             const mainContent = document.getElementById('main-content');
             const errorMsg = document.getElementById('error-msg');
+            
+            const hashed = await hashPassword(input);
 
-            if (input === TRIP_PASSWORD) {
+            if (hashed === '5768c50f891d9eb2a286ce4e1c954fb7a6b3919762037dd8ee841647d23fd220') {
                 overlay.style.opacity = '0';
                 setTimeout(() => {
                     overlay.style.display = 'none';
